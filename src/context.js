@@ -51,7 +51,7 @@ const AppProvider = ({ children }) => {
     setIndex((oldIndex) => {
       const index = oldIndex + 1;
       if (index > questions.length - 1) {
-        //openModal
+        openModal();
         return 0
       } else {
         return index
@@ -66,13 +66,23 @@ const AppProvider = ({ children }) => {
     nextQuestion();
   }
 
+  const openModal = () => {
+    setModal(true);
+  }
+
+  const closeModal = () => {
+    setWaiting(true);
+    setCorrect(0);
+    setModal(false);
+  };
+
   useEffect(() => {
     fetchQuestions(tempUrl);
   }, []);
 
   return (
     <AppContext.Provider
-      value={{ waiting, loading, questions, index, correct, error, modal, nextQuestion, checkAnswer }}
+      value={{ waiting, loading, questions, index, correct, error, modal, nextQuestion, checkAnswer, closeModal }}
     >
       {children}
     </AppContext.Provider>

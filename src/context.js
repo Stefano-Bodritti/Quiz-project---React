@@ -3,8 +3,8 @@ import React, { useState, useContext, useEffect } from 'react'
 
 const table = {
   television: 14,
-  videoGames: 15,
-  boardGames: 16,
+  videogames: 15,
+  boardgames: 16,
   sports: 21,
   history: 23,
   politics: 24,
@@ -82,11 +82,16 @@ const AppProvider = ({ children }) => {
   };
 
   const handleChange = (e) => {
-    console.log(e);
+    const name = e.target.name;
+    const value = e.target.value;
+    setQuiz({...quiz, [name]: value});
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const {amount, category, difficulty} = quiz;
+    const url = `${API_ENDPOINT}amount=${amount}&difficulty=${difficulty}&category=${table[category]}&type=multiple`;
+    fetchQuestions(url);
   }
 
   return (
